@@ -1,0 +1,16 @@
+{
+  "name": "strapi",
+  "dockerComposeFile": [
+    "../../docker-compose.yaml"
+  ],
+  "service": "strapi",
+  "workspaceFolder": "/opt/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-typescript-next"
+      ]
+    }
+  },
+  "shutdownAction": "stopCompose"
+}

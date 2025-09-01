@@ -1,0 +1,16 @@
+{
+  "name": "client",
+  "dockerComposeFile": [
+    "../../docker-compose.yaml"
+  ],
+  "service": "client",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-typescript-next"
+      ]
+    }
+  },
+  "shutdownAction": "stopCompose"
+}

@@ -1,0 +1,16 @@
+{
+  "name": "auth",
+  "dockerComposeFile": [
+    "../../docker-compose.yaml"
+  ],
+  "service": "auth",
+  "workspaceFolder": "/usr/src/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.vscode-typescript-next"
+      ]
+    }
+  },
+  "shutdownAction": "stopCompose"
+}
