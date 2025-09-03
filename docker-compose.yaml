@@ -16,6 +16,7 @@ services:
     user: "${UID}:${GID}"
     volumes:
       - ./server/src:/usr/src/app/src
+      - ./server/tsconfig.json:/usr/src/app/tsconfig.json
   client:
     build:
       context: ./client
@@ -27,6 +28,7 @@ services:
     user: "0:0"
     volumes:
       - ./client/src:/app/src
+      - ./client/tsconfig.json:/app/tsconfig.json
   auth:
     build:
       context: ./auth
@@ -40,6 +42,7 @@ services:
     user: "${UID}:${GID}"
     volumes:
       - ./auth/src:/usr/src/app/src
+      - ./auth/tsconfig.json:/usr/src/app/tsconfig.json
   strapi:
     build:
       context: ./strapi
@@ -59,6 +62,7 @@ services:
       - ./strapi/src/api:/opt/app/src/api
       - ./strapi/src/components:/opt/app/src/components
       - ./strapi/src/index.ts:/opt/app/src/index.ts
+      - ./strapi/src/tsconfig.json:/opt/app/src/tsconfig.json
   meilisearch:
     image: getmeili/meilisearch:latest
     ports:
