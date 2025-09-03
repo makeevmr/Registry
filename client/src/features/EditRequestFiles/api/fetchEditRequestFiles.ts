@@ -13,7 +13,7 @@ export const fetchEditRequestFiles = async (
   formData.append("request", "" + requestId);
 
   const response = await authorizedFetch(
-    process.env.NEXT_PUBLIC_SERVER_URL + "/api/request",
+    "/api/request",
     {
       method: "PUT",
       body: formData,

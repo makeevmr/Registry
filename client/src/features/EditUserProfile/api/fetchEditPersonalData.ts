@@ -8,7 +8,7 @@ export const fetchEditPersonalData = async (data: {
   };
 }) => {
   const response = await authorizedFetch(
-    process.env.NEXT_PUBLIC_SERVER_URL + "/api/profile/personal",
+    "/api/profile/personal",
     {
       method: "PUT",
       cache: "no-cache",

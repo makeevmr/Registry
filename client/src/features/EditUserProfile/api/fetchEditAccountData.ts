@@ -5,7 +5,7 @@ export const fetchEditAccountData = async (data: {
   phone: string;
 }) => {
   const response = await authorizedFetch(
-    process.env.NEXT_PUBLIC_SERVER_URL + "/api/profile/account",
+    "/api/profile/account",
     {
       method: "PUT",
       cache: "no-cache",

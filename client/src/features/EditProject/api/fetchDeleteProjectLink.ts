@@ -5,11 +5,10 @@ export const fetchDeleteProjectLink = async (
   linkId: number,
 ) => {
   const result: any = await authorizedFetch(
-    process.env.NEXT_PUBLIC_SERVER_URL +
-      "/api/project/" +
-      projectId +
-      "/link/" +
-      linkId,
+    "/api/project/" +
+    projectId +
+    "/link/" +
+    linkId,
     {
       method: "DELETE",
     },

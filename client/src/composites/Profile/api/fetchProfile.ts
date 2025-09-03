@@ -5,7 +5,7 @@ import { getFormFromDTO } from "@/entities/Form";
 
 export const fetchProfile = async (): Promise<Profile | null> => {
   const result: ProfileDTO | null = await authorizedFetch(
-    process.env.NEXT_PUBLIC_SERVER_URL + "/api/user/profile",
+    "/api/user/profile",
   ).then((response) => {
     try {
       return response.ok ? response.json() : null;
@@ -16,9 +16,9 @@ export const fetchProfile = async (): Promise<Profile | null> => {
 
   return result
     ? {
-        ...result,
-        projects: result.projects.map((project) => getProjectFromDTO(project)),
-        forms: result.forms.map((form) => getFormFromDTO(form)),
-      }
+      ...result,
+      projects: result.projects.map((project) => getProjectFromDTO(project)),
+      forms: result.forms.map((form) => getFormFromDTO(form)),
+    }
     : null;
 };

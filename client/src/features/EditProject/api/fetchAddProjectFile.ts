@@ -14,10 +14,9 @@ export const fetchAddProjectFile = async (
   formData.append("team", "" + teamId);
 
   const result: any = await authorizedFetch(
-    process.env.NEXT_PUBLIC_SERVER_URL +
-      "/api/project/" +
-      projectId +
-      "/result-files",
+    "/api/project/" +
+    projectId +
+    "/result-files",
     {
       method: "POST",
       body: formData,

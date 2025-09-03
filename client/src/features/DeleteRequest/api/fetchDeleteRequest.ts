@@ -2,7 +2,7 @@ import { authorizedFetch } from "@/shared/utils";
 
 export const fetchDeleteRequest = async (requestId: number) => {
   const result = await authorizedFetch(
-    process.env.NEXT_PUBLIC_SERVER_URL + "/api/request/" + requestId,
+    "/api/request/" + requestId,
     {
       method: "DELETE",
     },
