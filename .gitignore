@@ -3,3 +3,8 @@ build/
 coverage/
 postgres/data
 redis/
+
+# Ignore all .env files
+*.env
+**/*.env
+**/*.env.local
