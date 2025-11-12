@@ -13,6 +13,8 @@ services:
     env_file:
       - ./.env
       - ./server/.env
+    extra_hosts:
+      - "dev.citec.spb.ru:host-gateway"
     user: "${UID}:${GID}"
     volumes:
       - ./server/src:/usr/src/app/src
@@ -25,6 +27,8 @@ services:
     env_file:
       - ./.env
       - ./client/.env.local
+    extra_hosts:
+      - "dev.citec.spb.ru:host-gateway"
     user: "0:0"
     volumes:
       - ./client/src:/app/src
@@ -39,6 +43,8 @@ services:
     env_file:
       - ./.env
       - ./auth/.env
+    extra_hosts:
+      - "dev.citec.spb.ru:host-gateway"
     user: "${UID}:${GID}"
     volumes:
       - ./auth/src:/usr/src/app/src
@@ -55,6 +61,8 @@ services:
     env_file:
       - ./.env
       - ./strapi/.env
+    extra_hosts:
+      - "dev.citec.spb.ru:host-gateway"
     user: "${UID}:${GID}"
     volumes:
       - ./public/uploads:/opt/app/public/uploads
