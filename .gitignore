@@ -2,7 +2,9 @@ node_modules/
 build/
 coverage/
 postgres/data
+postgres/init
 redis/
+public/
 
 # Ignore all .env files
 *.env
