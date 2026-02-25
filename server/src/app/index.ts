@@ -16,13 +16,14 @@ import errorHandler from "@/middleware/errors/ErrorHandler";
 import memberRouter from "@/routes/member/router";
 import categoryRouter from "@/routes/category/router";
 import profileRouter from "@/routes/profile/router";
+import surveyResultRouter from "@/routes/survey-result/router";
 import swaggerUi from "swagger-ui-express";
 import { absolutePath } from "swagger-ui-dist";
 import { swaggerSpec } from "./swagger";
 
 const generateApp = (port?: number) => {
   const app = express();
-  if (port) app.listen(port, () => console.log("listening port 8000"));
+  if (port) app.listen(port, () => console.log(`listening port ${port}`));
 
   app.use(bodyParser.json());
   app.use(express.urlencoded({ extended: true }));
@@ -58,6 +59,7 @@ const generateApp = (port?: number) => {
   app.use("/member", memberRouter);
   app.use("/category", categoryRouter);
   app.use("/profile", profileRouter);
+  app.use("/survey", surveyResultRouter);
 
   app.use(errorLogger);
   app.use(errorHandler);

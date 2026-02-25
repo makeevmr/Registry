@@ -8,9 +8,13 @@ import { Team } from "@/entities/team";
 export interface User {
   id: number;
   name: string;
+  email?: string;
+  phone?: string;
 }
 
-export type UserCreate = Omit<User, "id">;
+export type UserCreate = Omit<User, "id"> & {
+  email: string;
+};
 
 export interface UserProjectStatusData {
   user: {
@@ -22,6 +26,10 @@ export interface UserProjectStatusData {
 
 export interface UserProfileData {
   forms: FormResultClient[];
+  survey: {
+    id: number;
+    submittedAt: string;
+  } | null;
   projects: ProjectDTO[];
   requests: Request[];
   user: {

@@ -6,8 +6,12 @@ export const sidebarItems: UserSidebarItem[] = [
     name: "Мой профиль",
   },
   {
+    slug: "survey",
+    name: "Анкета",
+  },
+  {
     slug: "forms",
-    name: "Анкеты",
+    name: "Анкета google",
   },
   {
     slug: "teams",

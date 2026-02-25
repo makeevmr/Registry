@@ -24,6 +24,7 @@ interface UserLayoutProps {
 
 const slugs: UserSidebarItemSlug[] = [
   "hero",
+  "survey",
   "forms",
   "profile",
   "projects",

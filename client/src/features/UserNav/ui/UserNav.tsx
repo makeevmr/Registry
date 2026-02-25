@@ -143,6 +143,9 @@ const UserNav: FC<UserNavProps> = ({ text = "bright" }) => {
                   <Link href="/user">Мой профиль</Link>
                 </li>
                 <li className="cursor-pointer sm:px-7">
+                  <Link href="/user/survey">Анкета</Link>
+                </li>
+                <li className="cursor-pointer sm:px-7">
                   <Link href="/user/teams">Команды</Link>
                 </li>
                 <li className="cursor-pointer sm:px-7">
@@ -150,9 +153,6 @@ const UserNav: FC<UserNavProps> = ({ text = "bright" }) => {
                 </li>
                 <li className="cursor-pointer sm:px-7">
                   <Link href="/user/requests">Заявки</Link>
-                </li>
-                <li className="cursor-pointer sm:px-7">
-                  <Link href="/user/forms">Анкеты</Link>
                 </li>
                 <li className="cursor-pointer sm:px-7">
                   <Link href="/user/profile">Настройки</Link>

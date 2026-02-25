@@ -8,6 +8,10 @@ import { IUser } from "@/entities/User";
 
 export interface Profile {
   forms: IForm[];
+  survey: {
+    id: number;
+    submittedAt: string;
+  } | null;
   projects: IProject[];
   requests: IRequest[];
   teams: ITeamExtended[];
@@ -29,6 +33,10 @@ export interface Profile {
 
 export interface ProfileDTO {
   forms: IFormDTO[];
+  survey: {
+    id: number;
+    submittedAt: string;
+  } | null;
   projects: ProjectDTO[];
   requests: IRequest[];
   teams: ITeamExtended[];

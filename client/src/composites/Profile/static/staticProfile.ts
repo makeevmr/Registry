@@ -15,6 +15,7 @@ export const staticProfileTeamAssigned: ProfileDTO = {
       completed: null,
     },
   ],
+  survey: null,
   requests: [],
   teams: [
     {
@@ -144,6 +145,7 @@ export const staticProfileTeamHiring: ProfileDTO = {
       completed: null,
     },
   ],
+  survey: null,
   requests: [{ id: 29, team: 4, project: "1", files: [] }],
   teams: [
     {

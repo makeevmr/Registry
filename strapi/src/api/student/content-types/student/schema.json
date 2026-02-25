@@ -35,6 +35,11 @@
       "repeatable": true,
       "component": "user-form.user-form"
     },
+    "survey": {
+      "type": "component",
+      "repeatable": false,
+      "component": "user-survey.user-survey"
+    },
     "services": {
       "displayName": "User Service",
       "type": "component",

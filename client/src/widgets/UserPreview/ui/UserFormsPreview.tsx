@@ -14,15 +14,16 @@ const UserFormsPreview: FC<UserFormsPreviewProps> = ({ className }) => {
 
   if (!profile) return <div></div>;
 
-  const completedForms = profile.forms.filter((form) => form.completed);
+  // Check if internal survey is completed
+  const surveyCompleted = profile.survey?.submittedAt;
 
-  if (!completedForms.length)
+  if (!surveyCompleted)
     return (
       <NamedBlock
         accent={true}
         className={className}
-        title={"Анкеты"}
-        link="/user/forms"
+        title={"Анкета"}
+        link="/user/survey"
       >
         <div className="flex h-full flex-col items-start">
           <div className="flex items-center">
@@ -30,10 +31,10 @@ const UserFormsPreview: FC<UserFormsPreviewProps> = ({ className }) => {
               <Image fill={true} src="/warning-circle-icon-white.svg" alt="" />
             </div>
             <div className="pr-5" />
-            <p className="font-medium">У вас нет пройденных анкет</p>
+            <p className="font-medium">Вы не прошли анкету</p>
           </div>
           <div className="pt-11" />
-          <Link href="/user/forms">
+          <Link href="/user/survey">
             <ButtonAlt className="mt-auto rounded-full px-8 py-3">
               Пройти анкету
             </ButtonAlt>
@@ -43,21 +44,23 @@ const UserFormsPreview: FC<UserFormsPreviewProps> = ({ className }) => {
     );
 
   return (
-    <NamedBlock className={className} title={"Анкеты"} link="/user/forms">
+    <NamedBlock className={className} title={"Анкета"} link="/user/survey">
       <div className="flex h-full flex-col items-start">
-        <div className="flex items-end">
-          <p className="font-[0.9375rem] text-[#898989]">Вы заполнили анкет </p>
-          <div className="pr-16" />
-          <p className="flex items-center justify-center text-4xl font-medium">
-            {completedForms.length}
-          </p>
+        <div className="flex items-center gap-4">
+          <div className="relative h-10 w-10">
+            <Image src="/checked-circle-icon.svg" fill={true} alt="" />
+          </div>
+          <div>
+            <p className="font-medium">Анкета заполнена</p>
+            <p className="text-sm text-[#898989]">
+              {new Date(surveyCompleted).toLocaleDateString("ru-RU", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })}
+            </p>
+          </div>
         </div>
-        <div className="pt-11" />
-        <Link href="/user/forms">
-          <Button className="mt-auto rounded-full px-8 py-3">
-            Заполнить анкету
-          </Button>
-        </Link>
       </div>
     </NamedBlock>
   );
