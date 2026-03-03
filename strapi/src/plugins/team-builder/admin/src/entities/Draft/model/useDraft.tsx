@@ -7,12 +7,15 @@ import { useDraftStore } from "./useDraftStore";
 
 export const useDraft = () => {
   const { selectedForm, setSelectedForm } = useFormStore();
-  const { students, getSelectedStudents, setSelectedStudents } =
+  const { students, getSelectedStudents, setSelectedStudents, fetchBySurvey } =
     useStudentStore();
   const { teams, setTeams } = useDraftTeamsStore();
   const { draft, setDraft } = useDraftStore();
 
   const { get, post, put } = useFetchClient();
+
+  // Check if draft is survey-based
+  const isSurveyBased = draft?.survey ? true : false;
 
   const initialize = async (draftId: number | null) => {
     if (typeof draftId != "number") return;
@@ -21,7 +24,15 @@ export const useDraft = () => {
 
     if (response.status != 200) return;
 
-    setSelectedForm(response.data?.form?.id || null);
+    // Check if this draft has a survey field
+    if (response.data?.survey) {
+      // Survey-based draft
+      fetchBySurvey();
+    } else {
+      // Form-based draft
+      setSelectedForm(response.data?.form?.id || null);
+    }
+
     setSelectedStudents(
       response?.data?.activeStudents?.map(
         (student: { id: number }) => student.id
@@ -33,7 +44,11 @@ export const useDraft = () => {
       }))
     );
 
-    setDraft({ id: response?.data?.id, name: response?.data?.name });
+    setDraft({
+      id: response?.data?.id,
+      name: response?.data?.name,
+      survey: response?.data?.survey || null,
+    });
   };
 
   const saveDraft = async () => {
@@ -42,7 +57,8 @@ export const useDraft = () => {
       draft: {
         id: draft.id,
         name: draft.name,
-        form: selectedForm,
+        form: isSurveyBased ? null : selectedForm,
+        survey: isSurveyBased ? "Анкета ПМ-ПУ" : null,
         activeStudents: getSelectedStudents(),
         teams: teams.map((team) =>
           team.students
@@ -65,5 +81,5 @@ export const useDraft = () => {
     return response.status;
   };
 
-  return { draft, setDraft, initialize, saveDraft, generateDraft };
+  return { draft, setDraft, initialize, saveDraft, generateDraft, isSurveyBased };
 };

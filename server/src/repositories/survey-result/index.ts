@@ -16,7 +16,7 @@ const surveyResultRepositoryFactory = () => {
   async function findByUser(userId: number): Promise<SurveyResult | null> {
     const params = {
       populate: {
-        survey: {
+        surveyResult: {
           populate: {
             file: {
               fields: ["id", "url"],
@@ -31,14 +31,21 @@ const surveyResultRepositoryFactory = () => {
       params,
     });
 
-    if (!response || !response.data || !response.data.attributes.survey) {
+    if (!response || !response.data) {
       return null;
     }
 
-    const survey = response.data.attributes.survey;
+    const attributes = response.data.attributes;
+
+    // Check if survey boolean is true and surveyResult exists
+    if (!attributes.survey || !attributes.surveyResult) {
+      return null;
+    }
+
+    const surveyResult = attributes.surveyResult;
     return {
-      file: survey.file?.data?.id || null,
-      date: survey.date,
+      file: surveyResult.file?.data?.id || null,
+      date: surveyResult.date,
     };
   }
 
@@ -56,7 +63,8 @@ const surveyResultRepositoryFactory = () => {
 
     const body = {
       data: {
-        survey: surveyResult,
+        survey: true, // Set boolean to true
+        surveyResult: surveyResult, // Store the actual survey data
       },
     };
 

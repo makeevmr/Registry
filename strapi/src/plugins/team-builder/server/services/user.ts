@@ -23,4 +23,30 @@ export default ({ strapi }: { strapi: Strapi }) => ({
 
     return userAdapter(users as any, formId);
   },
+
+  async getUsersBySurvey() {
+    const users = await strapi.entityService?.findMany("api::student.student", {
+      filters: {
+        survey: {
+          $eq: true,
+        },
+      },
+      populate: {
+        surveyResult: {
+          populate: {
+            file: true,
+          },
+        },
+      },
+    });
+
+    // Adapt users for survey (similar to form adapter but for survey)
+    return (users as any[])?.map((user: any) => ({
+      id: user.id,
+      name: user.name,
+      form: {
+        data: user.surveyResult?.file ? true : false,
+      },
+    })) || [];
+  },
 });

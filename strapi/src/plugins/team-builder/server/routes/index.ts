@@ -17,6 +17,14 @@ export default [
   },
   {
     method: "GET",
+    path: "/student-survey",
+    handler: "userController.getUsersBySurvey",
+    config: {
+      policies: [],
+    },
+  },
+  {
+    method: "GET",
     path: "/project",
     handler: "projectController.getProjects",
     config: {

@@ -25,6 +25,9 @@
       "relation": "manyToOne",
       "target": "api::form.form"
     },
+    "survey": {
+      "type": "string"
+    },
     "activeStudents": {
       "type": "relation",
       "relation": "manyToMany",

@@ -13,4 +13,11 @@ export default ({ strapi }: { strapi: Strapi }) => ({
       .service("userService")
       .getUsersByForm(ctx.params.formId);
   },
+
+  async getUsersBySurvey(ctx) {
+    ctx.body = await strapi
+      .plugin("team-builder")
+      .service("userService")
+      .getUsersBySurvey();
+  },
 });

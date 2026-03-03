@@ -11,10 +11,16 @@ import { useFetchClient } from "@strapi/helper-plugin";
 import { useDraftTeamsStore } from "../../entities/Team/model";
 import { useProjectStore } from "../../entities/Project";
 
-interface AutoGenerateProps {}
+interface AutoGenerateProps {
+  isSurveyBased?: boolean;
+}
 
-const AutoGenerate: FC<AutoGenerateProps> = () => {
-  const [options] = useState([{ name: "NLP v1.2 - 5 students per team" }]);
+const AutoGenerate: FC<AutoGenerateProps> = ({ isSurveyBased = false }) => {
+  const [options] = useState(
+    isSurveyBased
+      ? [{ name: "KMeans with ILP" }]
+      : [{ name: "NLP v1.2 - 5 students per team" }]
+  );
 
   const { post } = useFetchClient();
 
@@ -27,7 +33,11 @@ const AutoGenerate: FC<AutoGenerateProps> = () => {
   const handleGenerate = async () => {
     const selectedStudents = getSelectedStudents();
     const selectedProjects = getSelectedProjects();
-    if (selected) {
+
+    if (!selected) return;
+
+    if (isSurveyBased) {
+      // Survey-based generation
       const projectData = await Promise.all(
         selectedProjects.map((project) => {
           return fetch(
@@ -39,6 +49,30 @@ const AutoGenerate: FC<AutoGenerateProps> = () => {
       const result = await post("/team-builder/autogenerate", {
         users: selectedStudents,
         projects: projectData,
+        isSurveyBased: true,
+      });
+
+      if (result.status == 200 && result.data) {
+        // Set teams from algorithm response
+        setTeams(result.data);
+        alert("Teams generated successfully using KMeans with ILP algorithm!");
+      } else {
+        alert(`Error generating teams: ${result.data?.error || "Unknown error"}`);
+      }
+    } else {
+      // Form-based generation
+      const projectData = await Promise.all(
+        selectedProjects.map((project) => {
+          return fetch(
+            process.env.SERVER_URL + "/project/" + project.slug
+          ).then((res) => res.json());
+        })
+      );
+
+      const result = await post("/team-builder/autogenerate", {
+        users: selectedStudents,
+        projects: projectData,
+        isSurveyBased: false,
       });
 
       if (result.status == 200 && result.data) {

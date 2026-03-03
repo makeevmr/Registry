@@ -12,6 +12,7 @@ import Marginer from "../../components/shared/Marginer";
 import { HalfWidthLargeScreen } from "./styles";
 import UserSelect from "../../components/UserSelect";
 import FormSelect from "../../components/FormSelect";
+import SurveySelect from "../../components/SurveySelect";
 import AutoGenerate from "../../components/AutoGenerate";
 import TeamList from "../../components/TeamList";
 import { useParams } from "react-router-dom";
@@ -26,7 +27,7 @@ interface EditPageProps {
 const EditPage: FC<EditPageProps> = ({ pluginId }) => {
   const params = useParams<{ id: string | undefined }>();
 
-  const { initialize, draft } = useDraft();
+  const { initialize, draft, isSurveyBased } = useDraft();
 
   useEffect(() => {
     if (params && params.id) initialize(+params.id);
@@ -58,7 +59,7 @@ const EditPage: FC<EditPageProps> = ({ pluginId }) => {
           <Marginer vertical={20} />
           <Flex justifyContent="space-between">
             <HalfWidthLargeScreen>
-              <FormSelect />
+              {isSurveyBased ? <SurveySelect /> : <FormSelect />}
             </HalfWidthLargeScreen>
             <HalfWidthLargeScreen>
               <UserSelect />
@@ -71,7 +72,7 @@ const EditPage: FC<EditPageProps> = ({ pluginId }) => {
             <Divider />
           </Box>
           <Marginer vertical={25} />
-          <AutoGenerate />
+          <AutoGenerate isSurveyBased={isSurveyBased} />
         </Box>
         <Marginer vertical={30} />
         <TeamList />

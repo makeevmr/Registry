@@ -40,7 +40,7 @@ export default ({ strapi }: { strapi: Strapi }) => ({
       "plugin::team-builder.draft",
       +id,
       {
-        fields: ["id", "name"],
+        fields: ["id", "name", "survey"],
         populate: {
           form: {
             fields: ["id"],

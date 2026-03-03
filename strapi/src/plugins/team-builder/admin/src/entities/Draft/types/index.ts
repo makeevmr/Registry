@@ -5,12 +5,14 @@ import { ITeam } from "../../Team";
 export interface IDraft {
   id: number;
   name: string;
+  survey?: string | null;
 }
 
 export interface IDraftDTO {
   id: number;
   name: string;
   form: number | null;
+  survey?: string | null;
   activeStudents: number[];
   teams: number[][];
 }

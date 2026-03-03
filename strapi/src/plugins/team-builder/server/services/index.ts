@@ -4,6 +4,7 @@ import draftService from "./draft";
 import teamDraftService from "./team-draft";
 import projectService from "./project";
 import autogenerateService from "./autogenerate";
+import surveyAdapterService from "./survey-adapter";
 
 export default {
   formService,
@@ -12,4 +13,5 @@ export default {
   teamDraftService,
   projectService,
   autogenerateService,
+  surveyAdapterService,
 };

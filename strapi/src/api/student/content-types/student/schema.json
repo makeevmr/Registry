@@ -36,6 +36,10 @@
       "component": "user-form.user-form"
     },
     "survey": {
+      "type": "boolean",
+      "default": false
+    },
+    "surveyResult": {
       "type": "component",
       "repeatable": false,
       "component": "user-survey.user-survey"

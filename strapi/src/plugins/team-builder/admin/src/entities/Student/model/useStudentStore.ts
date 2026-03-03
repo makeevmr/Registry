@@ -10,6 +10,7 @@ interface StudentState {
   getSelectedStudents: () => IStudentDetailed[];
   setSelectedStudents: (students: string[] | number[]) => void;
   fetchByForm: (formId: number) => void;
+  fetchBySurvey: () => void;
 }
 
 export const useStudentStore = create<StudentState>()((set, get) => ({
@@ -44,6 +45,18 @@ export const useStudentStore = create<StudentState>()((set, get) => ({
     const { get } = getFetchClient();
 
     const response = await get("/team-builder/student/" + formId);
+
+    if (response.status != 200) set({ students: [] });
+
+    set({
+      students:
+        response?.data?.filter((student: any) => student.form.data) || [],
+    });
+  },
+  fetchBySurvey: async () => {
+    const { get } = getFetchClient();
+
+    const response = await get("/team-builder/student-survey");
 
     if (response.status != 200) set({ students: [] });
 
