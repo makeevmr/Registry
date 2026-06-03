@@ -8,4 +8,5 @@ export interface Team {
 
 export interface TeamToSave {
   students: UserDetailed[];
+  project?: number | null;
 }

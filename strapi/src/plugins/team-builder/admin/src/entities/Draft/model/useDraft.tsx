@@ -39,9 +39,12 @@ export const useDraft = () => {
       ) || null
     );
     setTeams(
-      response.data.teams.map((team: { users: { id: number }[] }) => ({
-        students: team.users.map((user) => user.id),
-      }))
+      response.data.teams.map(
+        (team: { users: { id: number }[]; project?: { id: number } | null }) => ({
+          students: team.users.map((user) => user.id),
+          project: team.project?.id ?? null,
+        })
+      )
     );
 
     setDraft({
@@ -60,11 +63,12 @@ export const useDraft = () => {
         form: isSurveyBased ? null : selectedForm,
         survey: isSurveyBased ? "Анкета ПМ-ПУ" : null,
         activeStudents: getSelectedStudents(),
-        teams: teams.map((team) =>
-          team.students
+        teams: teams.map((team) => ({
+          students: team.students
             .map((student) => students.find((mapped) => mapped.id == student))
-            .filter((student) => student)
-        ),
+            .filter((student) => student),
+          project: team.project ?? null,
+        })),
       },
     });
   };
@@ -75,6 +79,7 @@ export const useDraft = () => {
         students: team.students
           .map((student) => students.find((mapped) => mapped.id == student))
           .filter((student) => student),
+        project: team.project ?? null,
       })),
     });
 

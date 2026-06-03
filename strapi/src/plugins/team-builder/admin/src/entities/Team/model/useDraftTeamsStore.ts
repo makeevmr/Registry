@@ -26,6 +26,7 @@ export const useDraftTeamsStore = create<DraftTeamsState>()((set) => ({
         {
           name: "Team " + state.teams.length + 1,
           students: [],
+          project: null,
         },
       ],
     })),

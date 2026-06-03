@@ -3,5 +3,5 @@ export interface Draft {
   name: string;
   form: number;
   activeStudents: number[];
-  teams: number[][];
+  teams: { students: number[]; project: number | null }[];
 }

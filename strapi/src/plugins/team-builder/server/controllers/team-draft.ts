@@ -66,6 +66,7 @@ export default ({ strapi }: { strapi: Strapi }) => ({
         // Output format: { result: [{ project_id: "chat-bot", team_members_ids: [149, 100, ...] }] }
         const teams = algorithmResponse.data.result.map((team: any) => ({
           students: team.team_members_ids,
+          project: team.project_id ?? null,
         }));
 
         ctx.body = teams;

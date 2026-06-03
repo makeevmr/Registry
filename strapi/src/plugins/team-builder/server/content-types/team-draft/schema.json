@@ -21,6 +21,11 @@
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::student.student"
+    },
+    "project": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::project.project"
     }
   }
 }

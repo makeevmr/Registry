@@ -28,7 +28,7 @@ export default {
     const membersData = event.params.data.members;
 
     const membersAddedIds =
-      membersData && membersData.connect.length
+      membersData && membersData.connect && membersData.connect.length
         ? membersData.connect.map((data) => data.id)
         : [];
 
@@ -51,7 +51,7 @@ export default {
           .map((member) => formatName(member.user.name));
 
     const membersRemovedIds =
-      membersData && membersData.disconnect.length
+      membersData && membersData.disconnect && membersData.disconnect.length
         ? membersData.disconnect.map((data) => data.id)
         : [];
 
@@ -66,22 +66,39 @@ export default {
 
     const projectData = event.params.data.project;
 
-    const projectAdded =
-      !projectData || !projectData.connect.length
-        ? null
-        : (
-            await strapi.entityService.findOne(
-              "api::project.project",
-              projectData.connect[0].id,
-              {
-                fields: ["name"],
-              }
-            )
-          ).name;
+    const resolveProjectId = (data: any): number | null => {
+      if (data == null) return null;
+      if (typeof data === "number") return data;
+      if (typeof data === "string") return Number(data);
+      if (data.connect && data.connect.length) return data.connect[0].id;
+      if (data.set && data.set.length)
+        return data.set[0]?.id ?? data.set[0] ?? null;
+      return null;
+    };
+
+    const projectAddedId = resolveProjectId(projectData);
+
+    const projectDisconnected =
+      projectData &&
+      typeof projectData === "object" &&
+      ((projectData.disconnect && projectData.disconnect.length) ||
+        (projectData.set && projectData.set.length === 0));
+
+    const projectAdded = projectAddedId
+      ? (
+          await strapi.entityService.findOne(
+            "api::project.project",
+            projectAddedId,
+            {
+              fields: ["name"],
+            }
+          )
+        ).name
+      : null;
 
     const projectName =
       projectAdded ||
-      (projectData && projectData.disconnect.length
+      (projectDisconnected
         ? null
         : existingData.project && existingData.project.name
         ? existingData.project.name

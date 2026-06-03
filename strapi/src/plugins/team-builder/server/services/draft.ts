@@ -53,6 +53,9 @@ export default ({ strapi }: { strapi: Strapi }) => ({
               users: {
                 fields: ["id"],
               },
+              project: {
+                fields: ["id", "name"],
+              },
             },
           },
         },
@@ -96,9 +99,17 @@ export default ({ strapi }: { strapi: Strapi }) => ({
       }
     }
 
-    const teamsData = teams.map((team) => ({ draft: data.id, users: team }));
+    const teamsData = teams.map((team) => ({
+      draft: data.id,
+      users: team.students,
+      project: team.project ?? null,
+    }));
 
-    async function generateTeam(team: { draft: number; users: number[] }) {
+    async function generateTeam(team: {
+      draft: number;
+      users: number[];
+      project: number | null;
+    }) {
       return strapi.db?.query("plugin::team-builder.team-draft").create({
         data: team,
       });

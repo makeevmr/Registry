@@ -6,6 +6,7 @@ postgres/data
 postgres/init
 redis/
 public/
+dist_algo_input/
 
 # Ignore all .env files
 *.env

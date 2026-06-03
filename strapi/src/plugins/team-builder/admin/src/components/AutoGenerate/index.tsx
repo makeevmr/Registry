@@ -36,6 +36,14 @@ const AutoGenerate: FC<AutoGenerateProps> = ({ isSurveyBased = false }) => {
 
     if (!selected) return;
 
+    const slugToId = new Map(
+      selectedProjects.map((project) => [project.slug, project.id])
+    );
+    const resolveProject = (project: unknown) =>
+      typeof project === "string"
+        ? slugToId.get(project) ?? null
+        : (project as number | null) ?? null;
+
     if (isSurveyBased) {
       // Survey-based generation
       const projectData = await Promise.all(
@@ -54,7 +62,12 @@ const AutoGenerate: FC<AutoGenerateProps> = ({ isSurveyBased = false }) => {
 
       if (result.status == 200 && result.data) {
         // Set teams from algorithm response
-        setTeams(result.data);
+        setTeams(
+          result.data.map((team: { project?: unknown }) => ({
+            ...team,
+            project: resolveProject(team.project),
+          }))
+        );
         alert("Teams generated successfully using KMeans with ILP algorithm!");
       } else {
         alert(`Error generating teams: ${result.data?.error || "Unknown error"}`);
@@ -76,7 +89,12 @@ const AutoGenerate: FC<AutoGenerateProps> = ({ isSurveyBased = false }) => {
       });
 
       if (result.status == 200 && result.data) {
-        setTeams(result.data);
+        setTeams(
+          result.data.map((team: { project?: unknown }) => ({
+            ...team,
+            project: resolveProject(team.project),
+          }))
+        );
       }
     }
   };

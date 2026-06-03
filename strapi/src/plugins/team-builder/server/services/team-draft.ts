@@ -49,6 +49,20 @@ export default ({ strapi }: { strapi: Strapi }) => ({
       )
     );
 
+    await Promise.all(
+      teams.map((team, index) =>
+        team.project != null
+          ? strapi.entityService?.update(
+              "api::team.team",
+              teamIds[index] as number,
+              {
+                data: { project: team.project } as any,
+              }
+            )
+          : null
+      )
+    );
+
     return result;
   },
 });

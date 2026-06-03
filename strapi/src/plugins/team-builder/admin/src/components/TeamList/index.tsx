@@ -20,6 +20,7 @@ import { formatNameShort, useStudentStore } from "../../entities/Student";
 import UserAdd from "../UserAdd";
 import TeamInspect from "../TeamInspect";
 import { IStudentDetailed } from "../../entities/Student/types";
+import { useProjectStore } from "../../entities/Project";
 
 interface TeamListProps {}
 
@@ -34,6 +35,18 @@ const TeamList: FC<TeamListProps> = () => {
     useDraftTeamsStore();
 
   const { students } = useStudentStore();
+
+  const { projects } = useProjectStore();
+
+  const projectsMap = useMemo(() => {
+    const map = new Map<number, string>();
+
+    projects.forEach((project) => {
+      map.set(project.id, project.name);
+    });
+
+    return map;
+  }, [projects]);
 
   const studentsMap = useMemo(() => {
     const map = new Map<number, IStudentDetailed>();
@@ -80,7 +93,9 @@ const TeamList: FC<TeamListProps> = () => {
               height="100%"
             >
               <TeamName onClick={() => setSelectedTeamIndex(index)}>
-                Team {index + 1}
+                {team.project != null && projectsMap.has(team.project)
+                  ? projectsMap.get(team.project)
+                  : `Team ${index + 1}`}
               </TeamName>
               <Marginer vertical={20} />
               <StudentList>
