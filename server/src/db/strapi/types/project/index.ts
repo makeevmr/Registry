@@ -29,6 +29,7 @@ interface ProjectStrapiInner {
     teams?: TeamListStrapi | IdListStrapi;
     teamLimit: number | null;
     related?: ProjectListStrapi;
+    employerOwner?: { data: { id: number } | null };
   };
 }
 

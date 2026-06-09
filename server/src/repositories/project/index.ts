@@ -1,7 +1,12 @@
 import { ProjectFilters } from "@/entities/project";
 import { generateProjectFilters } from "./utils/generateProjectFilters";
 import { checkFilterValidity } from "./utils/checkFilterValidity";
-import { ProjectDTO, ProjectDetailedDTO } from "@/entities/project/types/types";
+import {
+  ProjectCreate,
+  ProjectUpdate,
+  ProjectDTO,
+  ProjectDetailedDTO,
+} from "@/entities/project/types/types";
 import { Team } from "@/entities/team";
 import { selectTeam } from "@/db/strapi/queries/team";
 import { selectMember } from "@/db/strapi/queries/member";
@@ -39,7 +44,94 @@ const projectRepositoryFactory = () => {
     findMany,
     getReferences,
     getInternalId,
+    create,
+    update,
   });
+
+  async function update(
+    slug: string,
+    data: Omit<ProjectUpdate, "tags">,
+    options: { tagIds: number[] }
+  ): Promise<boolean> {
+    const id = await getInternalId(slug);
+
+    if (!id) throw new BadRequestError("Project not found");
+
+    const body = {
+      data: {
+        name: data.name,
+        description: data.description,
+        dateStart: data.dateStart,
+        dateEnd: data.dateEnd,
+        enrollmentStart: data.enrollmentStart,
+        enrollmentEnd: data.enrollmentEnd,
+        client: data.client,
+        clientContact: data.clientContact,
+        teamLimit: data.teamLimit,
+        // `set` replaces the whole tag relation with the provided ids.
+        tags: { set: options.tagIds.map((tagId) => ({ id: tagId })) },
+        // Re-sending the component arrays replaces the existing entries.
+        developerRequirements: (data.developerRequirements || []).map(
+          (developerRequirement) => ({ developerRequirement })
+        ),
+        projectRequirements: (data.projectRequirements || []).map(
+          (projectRequirement) => ({ projectRequirement })
+        ),
+      },
+    };
+
+    const response = await strapi.put("projects/" + id, {
+      token: process.env.PROJECTS_TOKEN!,
+      body,
+    });
+
+    if (!response || !response.data)
+      throw new ServerError("Failed to update the Project");
+
+    return true;
+  }
+
+  async function create(
+    data: Omit<ProjectCreate, "shortName" | "tags">,
+    options: { slug: string; tagIds: number[]; employerId: number }
+  ): Promise<{ id: number; slug: string } | null> {
+    const body = {
+      data: {
+        name: data.name,
+        description: data.description,
+        dateStart: data.dateStart,
+        dateEnd: data.dateEnd,
+        enrollmentStart: data.enrollmentStart,
+        enrollmentEnd: data.enrollmentEnd,
+        client: data.client,
+        clientContact: data.clientContact,
+        teamLimit: data.teamLimit,
+        slug: options.slug,
+        tags: { connect: options.tagIds.map((id) => ({ id })) },
+        // Repeatable components: each entry holds one free-text requirement.
+        developerRequirements: (data.developerRequirements || []).map(
+          (developerRequirement) => ({ developerRequirement })
+        ),
+        projectRequirements: (data.projectRequirements || []).map(
+          (projectRequirement) => ({ projectRequirement })
+        ),
+        employerOwner: { connect: [{ id: options.employerId }] },
+        // draftAndPublish is on for projects; publish immediately so the new
+        // project shows up in the (published-only) list queries.
+        publishedAt: new Date().toISOString(),
+      },
+    };
+
+    const response = await strapi.post("projects", {
+      token: process.env.PROJECTS_TOKEN!,
+      body,
+    });
+
+    if (!response || !response.data || !response.data.id)
+      throw new ServerError("Failed to create a Project");
+
+    return { id: response.data.id, slug: options.slug };
+  }
 
   async function getNew(limit?: number): Promise<{
     projects: ProjectDTO[];
@@ -153,6 +245,9 @@ const projectRepositoryFactory = () => {
         }),
         developerRequirements: selectDeveloperRequirements(),
         projectRequirements: selectProjectRequirements(),
+        employerOwner: {
+          fields: ["id"],
+        },
         requests: {
           count: true,
         },

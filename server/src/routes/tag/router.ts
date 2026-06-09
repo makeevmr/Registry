@@ -5,6 +5,24 @@ const tagRouter = express();
 
 /**
  * @swagger
+ * /tag/all:
+ *   get:
+ *     tags: [Tag]
+ *     summary: Get the full list of tags
+ *     description: Returns all tags (used by the project-creation form).
+ *     responses:
+ *       '200':
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/definitions/Tag'
+ */
+tagRouter.get("/all", tagController.findAll);
+
+/**
+ * @swagger
  * tags:
  *   name: Tag
  *   description: The Tag managing API

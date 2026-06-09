@@ -25,6 +25,11 @@ import { ProjectStage } from "./types/types";
 import { getProjectsByProjectIds } from "./model/getProjectsByProjectIds";
 import { useProjectFileTypeQuery } from "./model/useProjectFileTypeQuery";
 import ProjectLinkIcon from "./ui/ProjectLinkIcon";
+import ProjectForm from "./ui/ProjectForm";
+import type {
+  ProjectFormInitialValues,
+  ProjectFormSubmitValues,
+} from "./ui/ProjectForm";
 
 export {
   ProjectCard,
@@ -41,6 +46,7 @@ export {
   getProjectsByProjectIds,
   useProjectFileTypeQuery,
   ProjectLinkIcon,
+  ProjectForm,
 };
 export type {
   ProjectDTO,
@@ -50,4 +56,6 @@ export type {
   IProjectReference,
   IProjectDocument,
   IProjectLink,
+  ProjectFormInitialValues,
+  ProjectFormSubmitValues,
 };

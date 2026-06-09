@@ -43,6 +43,30 @@ export interface ProjectDTO {
   teamLimit: number | null;
 }
 
+// Payload sent by an employer creating a project. `shortName` is English-only
+// (A-Z, a-z, spaces) and used solely to build the slug; it is not persisted.
+// `tags` are existing tag names, resolved to ids server-side.
+export interface ProjectCreate {
+  name: string;
+  shortName: string;
+  description: string;
+  dateStart: string;
+  dateEnd: string;
+  enrollmentStart: string;
+  enrollmentEnd: string;
+  client: string;
+  clientContact: string;
+  tags: string[];
+  // Max number of teams that can enroll. Drives the hiring/active stage.
+  teamLimit: number;
+  // Optional repeatable lists of free-text requirements.
+  developerRequirements?: string[];
+  projectRequirements?: string[];
+}
+
+// Editable fields on an existing project. shortName/slug are immutable.
+export type ProjectUpdate = Omit<ProjectCreate, "shortName">;
+
 export interface ProjectFilters {
   text?: string;
   dateStart?: Date | null;
@@ -72,6 +96,8 @@ export interface ProjectDetailed extends Project {
   documents: ProjectDocument[] | null;
   related: ProjectDTO[] | ProjectDetailedDTO[] | null;
   links: { id: number; platform: string; link: string }[];
+  // Strapi id of the employer who owns (created) the project, if any.
+  employerOwner: number | null;
 }
 
 export interface ProjectDetailedDTO extends ProjectDTO {
@@ -83,6 +109,7 @@ export interface ProjectDetailedDTO extends ProjectDTO {
   documents: ProjectDocument[] | null;
   related: ProjectDTO[] | ProjectDetailedDTO[] | null;
   links: { id: number; platform: string; link: string }[];
+  employerOwner: number | null;
 }
 
 export interface ProjectWithTags extends Omit<Project, "tags"> {

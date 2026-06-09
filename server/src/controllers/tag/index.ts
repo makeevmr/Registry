@@ -5,7 +5,18 @@ import { NextFunction, Request, Response } from "express";
 const tagControllerFactory = () => {
   return Object.freeze({
     findInFilters,
+    findAll,
   });
+
+  async function findAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const result = await tagService.findAll();
+
+      res.status(200).send(result);
+    } catch (err) {
+      next(err);
+    }
+  }
 
   async function findInFilters(
     req: Request,

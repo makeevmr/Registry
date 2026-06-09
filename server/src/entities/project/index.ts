@@ -3,6 +3,8 @@ import type {
   ProjectWithTags,
   ProjectFilters,
   ProjectReference,
+  ProjectCreate,
+  ProjectUpdate,
 } from "./types/types";
 import {
   staticProjectList,
@@ -17,4 +19,11 @@ export {
   getProjectFromDTO,
   getProjectFiltersFromDTO,
 };
-export type { Project, ProjectWithTags, ProjectFilters, ProjectReference };
+export type {
+  Project,
+  ProjectWithTags,
+  ProjectFilters,
+  ProjectReference,
+  ProjectCreate,
+  ProjectUpdate,
+};

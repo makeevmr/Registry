@@ -71,6 +71,7 @@ export const staticProjectSingleNotStarted: IProjectSingle = {
     },
   ],
   requestCount: 0,
+  employerOwner: null,
 };
 
 export const staticProjectSingleOngoing: IProjectSingle = {
@@ -136,6 +137,7 @@ export const staticProjectSingleOngoing: IProjectSingle = {
     },
   ],
   requestCount: 0,
+  employerOwner: null,
 };
 
 export const staticProjectSingleCompleted: IProjectSingle = {
@@ -201,4 +203,5 @@ export const staticProjectSingleCompleted: IProjectSingle = {
     },
   ],
   requestCount: 0,
+  employerOwner: null,
 };

@@ -8,7 +8,30 @@ import { ServerError } from "@/helpers/errors";
 const tagRepositoryFactory = () => {
   return Object.freeze({
     findMany,
+    findByNames,
   });
+
+  async function findByNames(names: string[]): Promise<Tag[]> {
+    if (!names.length) return [];
+
+    const params = {
+      filters: {
+        name: { $in: names },
+      },
+      ...selectTag(),
+    };
+
+    const result: TagListStrapi = await strapi.get("tags", {
+      token: process.env.PROJECTS_TOKEN!,
+      params,
+    });
+
+    if (!result) throw new ServerError("Couldn't fetch tags");
+
+    if (!result.data) return [];
+
+    return getTagListFromStrapiDTO(result);
+  }
 
   async function findMany(options?: {
     limit?: number;

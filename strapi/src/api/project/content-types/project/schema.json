@@ -39,6 +39,11 @@
       "target": "api::tag.tag",
       "mappedBy": "projects"
     },
+    "employerOwner": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::student.student"
+    },
     "teams": {
       "type": "relation",
       "relation": "oneToMany",

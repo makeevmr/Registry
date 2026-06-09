@@ -12,7 +12,46 @@ const projectControllerFactory = () => {
     getNew,
     findById,
     findMany,
+    create,
+    update,
   });
+
+  async function update(req: Request, res: Response, next: NextFunction) {
+    try {
+      if (!req.user)
+        throw new UnauthorizedError(
+          "req.user not specified in projectController.update"
+        );
+
+      if (!req.params.id)
+        throw new BadRequestError("Missing project identifier");
+
+      const result = await projectService.update(
+        req.params.id,
+        req.body,
+        req.user
+      );
+
+      res.status(200).json({ success: result });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async function create(req: Request, res: Response, next: NextFunction) {
+    try {
+      if (!req.user)
+        throw new UnauthorizedError(
+          "req.user not specified in projectController.create"
+        );
+
+      const result = await projectService.create(req.body, req.user);
+
+      res.status(201).json(result);
+    } catch (err) {
+      next(err);
+    }
+  }
 
   async function getActive(req: Request, res: Response, next: NextFunction) {
     try {

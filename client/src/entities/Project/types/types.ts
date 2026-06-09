@@ -64,6 +64,7 @@ export interface IProjectSingle extends IProject {
   documents: IProjectDocument[];
   related: IProject[];
   links: IProjectLink[];
+  employerOwner: number | null;
 }
 
 export interface IProjectSingleDTO extends ProjectDTO {
@@ -87,6 +88,7 @@ export interface IProjectSingleDTO extends ProjectDTO {
     platform: string;
     link: string;
   }[];
+  employerOwner: number | null;
 }
 
 export enum ProjectStage {

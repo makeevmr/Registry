@@ -18,6 +18,7 @@ import { redirect } from "next/navigation";
 import { ProjectDocuments } from "@/widgets/ProjectDocuments";
 import { ProjectLinks } from "@/widgets/ProjectLinks";
 import { IProjectDocument } from "@/entities/Team";
+import { EditProjectInfo } from "@/features/EditProjectInfo";
 
 type Props = {
   params: { slug: string };
@@ -153,6 +154,13 @@ const ProjectPage: FC<ProjectPageProps> = async ({ params }) => {
           </Container>
         </>
       )}
+      <Container>
+        <EditProjectInfo
+          slug={params.slug}
+          project={projectData.project}
+          tags={projectData.tags}
+        />
+      </Container>
       <div className="pt-32" />
       <Footer />
     </>

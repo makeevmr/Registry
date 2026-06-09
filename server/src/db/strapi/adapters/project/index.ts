@@ -228,6 +228,7 @@ export const getProjectFromStrapiDTO = (
       documents: project.data.attributes.documents
         ? getProjectDocumentListFromStrapiDTO(project.data.attributes.documents)
         : [],
+      employerOwner: project.data.attributes.employerOwner?.data?.id ?? null,
     },
     tags,
     ...(project.data.attributes.teams?.data?.[0]?.attributes?.hasOwnProperty(

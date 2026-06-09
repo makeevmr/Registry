@@ -1,5 +1,6 @@
 import projectController from "@/controllers/project";
 import express, { Request, Response } from "express";
+import passport from "@/middleware/passport";
 import projectResultsRouter from "./results/router";
 import projectLinksRouter from "./links/router";
 import projectFileTypeRouter from "./file-type/router";
@@ -196,5 +197,111 @@ projectRouter.get("/:id", projectController.findById);
  *                     $ref: '#/definitions/Tag'
  */
 projectRouter.post("/findmany", projectController.findMany);
+
+/**
+ * @swagger
+ * tags:
+ *   name: Project
+ *   description: The Project managing API
+ * /project:
+ *   post:
+ *     summary: Create a new project (employers only)
+ *     description: Authenticated employer creates a project. Requires a JWT cookie. The creating employer is stored as the project owner.
+ *     tags: [Project]
+ *     parameters:
+ *       - in: header
+ *         name: Cookie
+ *         type: string
+ *         required: true
+ *         description: Should contain user JWT-token
+ *       - in: body
+ *         name: body
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             name:
+ *               type: string
+ *               example: "Проект 1"
+ *             shortName:
+ *               type: string
+ *               description: English-only (A-Z, a-z, spaces). Used to build the slug.
+ *               example: "Simple test project name"
+ *             description:
+ *               type: string
+ *               example: "Описание проекта"
+ *             dateStart:
+ *               type: string
+ *               example: 2026-01-01
+ *             dateEnd:
+ *               type: string
+ *               example: 2026-06-01
+ *             enrollmentStart:
+ *               type: string
+ *               example: 2026-01-01
+ *             enrollmentEnd:
+ *               type: string
+ *               example: 2026-02-01
+ *             client:
+ *               type: string
+ *               example: "ООО Компания"
+ *             clientContact:
+ *               type: string
+ *               example: "tg: @username"
+ *             tags:
+ *               type: array
+ *               items:
+ *                 type: string
+ *               example: ["ИТ", "Финансы"]
+ *     responses:
+ *       '201':
+ *         description: Created project id and slug
+ *       '403':
+ *         description: User is not an employer
+ */
+projectRouter.post(
+  "/",
+  passport.authenticate("jwt-authenticate"),
+  projectController.create
+);
+
+/**
+ * @swagger
+ * /project/{id}:
+ *   put:
+ *     summary: Update a project (owning employer only)
+ *     description: Authenticated employer who owns the project updates its editable fields (name, description, dates, client, contact, team limit, tags, requirements). slug/shortName are immutable.
+ *     tags: [Project]
+ *     parameters:
+ *       - in: header
+ *         name: Cookie
+ *         type: string
+ *         required: true
+ *         description: Should contain user JWT-token
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         type: string
+ *         description: Project slug
+ *       - in: body
+ *         name: body
+ *         required: true
+ *         schema:
+ *           type: object
+ *           properties:
+ *             description:
+ *               type: string
+ *               example: "Новое описание проекта"
+ *     responses:
+ *       '200':
+ *         description: Update result
+ *       '403':
+ *         description: User is not the owning employer
+ */
+projectRouter.put(
+  "/:id",
+  passport.authenticate("jwt-authenticate"),
+  projectController.update
+);
 
 export default projectRouter;
