@@ -23,6 +23,7 @@ export const staticUser: User = {
   name: "Сатурнова Татьяна Тимофеевна ",
   email: "st072603@student.spbu.ru",
   phone: "+7 999 999 99 99",
+  userType: "student",
 };
 
 export const staticUserCreateResponseStrapi = {

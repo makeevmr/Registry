@@ -119,6 +119,7 @@ export const staticProfileTeamAssigned: ProfileDTO = {
   user: {
     email: "st461158@student.spbu.ru",
     phone: "+7 999 999 99 99",
+    userType: "student",
     fullName: {
       name: "Иван",
       surname: "Иванов",
@@ -250,6 +251,7 @@ export const staticProfileTeamHiring: ProfileDTO = {
   user: {
     email: "email@mail.ru",
     phone: "+7 999 999 99 99",
+    userType: "student",
     fullName: {
       name: "Иван",
       surname: "Иванов",

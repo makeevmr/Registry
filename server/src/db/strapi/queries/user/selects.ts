@@ -3,7 +3,7 @@ export type SelectUserOptions = {
 };
 
 export const selectUser = () => ({
-  fields: ["id", "name", "phone"],
+  fields: ["id", "name", "phone", "userType"],
   populate: {
     services: {
       provider: true,

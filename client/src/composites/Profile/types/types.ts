@@ -25,6 +25,7 @@ export interface Profile {
     };
     email: string;
     phone: string;
+    userType: "student" | "employer";
     teams: number[];
     administratedTeams: number[];
     projects: string[];
@@ -50,6 +51,7 @@ export interface ProfileDTO {
     };
     email: string;
     phone: string;
+    userType: "student" | "employer";
     teams: number[];
     administratedTeams: number[];
     projects: string[];

@@ -10,9 +10,12 @@ export interface User {
   name: string;
   email?: string;
   phone?: string;
+  userType: "student" | "employer";
 }
 
-export type UserCreate = Omit<User, "id"> & {
+// New users are always created as students (Strapi default), so userType
+// is not part of the create payload.
+export type UserCreate = Omit<User, "id" | "userType"> & {
   email: string;
 };
 
@@ -40,6 +43,7 @@ export interface UserProfileData {
     };
     email: string;
     phone: string;
+    userType: "student" | "employer";
     teams: number[];
     administratedTeams: number[];
     projects: string[];

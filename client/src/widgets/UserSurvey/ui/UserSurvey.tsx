@@ -10,6 +10,26 @@ const UserSurvey: FC = () => {
 
   if (!profile) return <div></div>;
 
+  // Employers don't take the survey or join team distribution.
+  if (profile.user.userType === "employer") {
+    return (
+      <NamedBlock accent={true} title={"Анкета недоступна"}>
+        <div className="flex h-full flex-col items-start">
+          <div className="flex items-center">
+            <div className="relative h-10 w-10">
+              <Image fill={true} src="/warning-circle-icon-white.svg" alt="" />
+            </div>
+            <div className="pr-5" />
+            <p className="font-medium">
+              Анкета доступна только студентам. Работодатели не участвуют в
+              распределении по командам.
+            </p>
+          </div>
+        </div>
+      </NamedBlock>
+    );
+  }
+
   // Check if user has email (required for surveys)
   if (!profile.user.email) {
     return (

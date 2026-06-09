@@ -84,6 +84,7 @@ describe("projectResultsService", () => {
         name: "User",
         email: "user@test.com",
         phone: "+7 999 999 99 99",
+        userType: "student" as const,
       };
 
       expect(
@@ -101,6 +102,7 @@ describe("projectResultsService", () => {
         name: "User",
         email: "user@test.com",
         phone: "+7 999 999 99 99",
+        userType: "student" as const,
       };
 
       (projectRepository.findOne as jest.Mock).mockReturnValueOnce({
@@ -161,6 +163,7 @@ describe("projectResultsService", () => {
         name: "User",
         email: "user@test.com",
         phone: "+7 999 999 99 99",
+        userType: "student" as const,
       };
 
       expect(projectResultsService.deleteFile("1", 1, user)).rejects.toThrow(
@@ -178,6 +181,7 @@ describe("projectResultsService", () => {
         name: "User",
         email: "user@test.com",
         phone: "+7 999 999 99 99",
+        userType: "student" as const,
       };
 
       (projectRepository.findOne as jest.Mock).mockReturnValueOnce({

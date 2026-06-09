@@ -147,6 +147,7 @@ const profileServiceFactory = () => {
       user: {
         email: userData?.email || "",
         phone: userData?.phone || "",
+        userType: userData?.userType || "student",
         fullName: {
           name: nameArray[1] || "",
           surname: nameArray[0] || "",

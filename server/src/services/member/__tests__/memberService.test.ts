@@ -51,6 +51,7 @@ describe("memberService", () => {
         name: "User",
         email: "test@test.com",
         phone: "+7 999 999 99 99",
+        userType: "student",
       };
 
       await memberService.edit(member, user);
@@ -85,6 +86,7 @@ describe("memberService", () => {
         name: "User",
         email: "test@test.com",
         phone: "+7 999 999 99 99",
+        userType: "student",
       };
 
       await memberService.edit(member, user);
@@ -119,6 +121,7 @@ describe("memberService", () => {
         name: "User",
         email: "test@test.com",
         phone: "+7 999 999 99 99",
+        userType: "student",
       };
 
       expect(memberService.edit(member, user)).rejects.toThrow(

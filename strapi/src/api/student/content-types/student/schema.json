@@ -1,6 +1,6 @@
 {
   "kind": "collectionType",
-  "collectionName": "students",
+  "collectionName": "users",
   "info": {
     "singularName": "student",
     "pluralName": "students",
@@ -17,6 +17,12 @@
     },
     "phone": {
       "type": "string"
+    },
+    "userType": {
+      "type": "enumeration",
+      "enum": ["student", "employer"],
+      "default": "student",
+      "required": true
     },
     "teams": {
       "type": "relation",

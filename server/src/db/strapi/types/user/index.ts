@@ -5,6 +5,7 @@ interface UserStrapiInner {
   attributes: {
     name: string;
     phone: string;
+    userType: "student" | "employer";
     services: {
       provider: string;
       value: string;
