@@ -1,5 +1,4 @@
 import { User, UserProfileData } from "@/entities/user";
-import formResultService from "../form-result";
 import surveyResultService from "../survey-result";
 import requestRepository from "@/repositories/request";
 import teamRepository from "@/repositories/team";
@@ -54,14 +53,12 @@ const profileServiceFactory = () => {
   async function getUserData(user: User): Promise<UserProfileData> {
     const [
       userResult,
-      formsResult,
       surveyResult,
       requestsResult,
       activeTeamsResult,
       activeAdministratedTeamsResult,
     ] = await Promise.allSettled([
       userService.findById(user.id),
-      formResultService.getAllByUser(user),
       surveyResultService.findByUser(user.id),
       requestRepository.getActive({ user: user.id }), // not all the requests associated with each team
       teamRepository.getActive(user.id, {
@@ -78,9 +75,6 @@ const profileServiceFactory = () => {
       userResult.status == "fulfilled" ? userResult.value || null : null;
 
     const nameArray = userData?.name?.split(" ") || [];
-
-    const forms =
-      formsResult.status == "fulfilled" ? formsResult.value || [] : [];
 
     const survey =
       surveyResult.status == "fulfilled" ? surveyResult.value || null : null;
@@ -132,7 +126,6 @@ const profileServiceFactory = () => {
       : [];
 
     return {
-      forms,
       survey: survey
         ? {
             id: 1,

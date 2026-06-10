@@ -10,10 +10,6 @@ export const sidebarItems: UserSidebarItem[] = [
     name: "Анкета",
   },
   {
-    slug: "forms",
-    name: "Анкета google",
-  },
-  {
     slug: "teams",
     name: "Команды",
   },

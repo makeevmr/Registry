@@ -5,7 +5,6 @@ import {
   staticProfileTeamAssigned,
   useProfileQuery,
 } from "@/composites/Profile";
-import { staticForms } from "@/entities/Form";
 
 jest.mock("@/composites/Profile", () => {
   const original = jest.requireActual("@/composites/Profile");
@@ -16,51 +15,43 @@ jest.mock("@/composites/Profile", () => {
   };
 });
 
-describe("UserProfilePreview widget UI", () => {
+describe("UserFormsPreview widget UI", () => {
   describe("User logged in", () => {
     beforeAll(() => {
       (useProfileQuery as jest.Mock).mockReturnValue({
-        data: { ...staticProfileTeamAssigned, forms: staticForms },
+        data: { ...staticProfileTeamAssigned, survey: null },
       });
     });
     beforeEach(() => {
       jest.clearAllMocks();
     });
 
-    it("should inform the user if no forms are completed", () => {
-      const notCompletedForms = staticForms.map((form) => ({
-        ...form,
-        completed: null,
-      }));
+    it("should inform the user if the survey is not completed", () => {
+      const { getByText } = render(<UserFormsPreview />);
+
+      const warning = getByText(/Вы не прошли анкету/i);
+      expect(warning).toBeVisible();
+    });
+
+    it("should show a redirect button when not completed", () => {
+      const { getByText } = render(<UserFormsPreview />);
+
+      const button = getByText(/Пройти анкету/i);
+      expect(button).toBeVisible();
+    });
+
+    it("should show completed state when the survey is submitted", () => {
       (useProfileQuery as jest.Mock).mockReturnValueOnce({
-        data: { ...staticProfileTeamAssigned, forms: notCompletedForms },
+        data: {
+          ...staticProfileTeamAssigned,
+          survey: { id: 1, submittedAt: "2023-10-26T15:43:25.385Z" },
+        },
       });
 
       const { getByText } = render(<UserFormsPreview />);
 
-      const warning = getByText(/У вас нет пройденных анкет/i);
-      expect(warning).toBeVisible();
-    });
-
-    it("should show the number of completed forms", () => {
-      const { getByText } = render(<UserFormsPreview />);
-
-      const count = staticForms.reduce(
-        (sum, cur) => (cur.completed ? sum + 1 : sum),
-        0,
-      );
-
-      const element = getByText(new RegExp("" + count));
-
-      expect(element).toBeInTheDocument();
-    });
-
-    it("should show a redirect button", () => {
-      const { getByText } = render(<UserFormsPreview />);
-
-      const button = getByText(/Заполнить анкету/i);
-
-      expect(button).toBeVisible();
+      const completed = getByText(/Анкета заполнена/i);
+      expect(completed).toBeVisible();
     });
   });
 
@@ -76,7 +67,7 @@ describe("UserProfilePreview widget UI", () => {
     it("shouldn't render the block", () => {
       const { queryByText } = render(<UserFormsPreview />);
 
-      const title = queryByText(/Анкеты/i);
+      const title = queryByText(/Анкета/i);
 
       expect(title).not.toBeInTheDocument();
     });

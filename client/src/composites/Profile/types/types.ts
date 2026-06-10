@@ -1,5 +1,3 @@
-import { IForm } from "@/entities/Form";
-import { IFormDTO } from "@/entities/Form/types/types";
 import { IMember } from "@/entities/Member";
 import { IProject, IProjectReference, ProjectDTO } from "@/entities/Project";
 import { IRequest } from "@/entities/Request";
@@ -7,7 +5,6 @@ import { ITeam, ITeamExtended } from "@/entities/Team";
 import { IUser } from "@/entities/User";
 
 export interface Profile {
-  forms: IForm[];
   survey: {
     id: number;
     submittedAt: string;
@@ -33,7 +30,6 @@ export interface Profile {
 }
 
 export interface ProfileDTO {
-  forms: IFormDTO[];
   survey: {
     id: number;
     submittedAt: string;

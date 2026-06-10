@@ -1,4 +1,3 @@
-import { FormResultClient } from "@/entities/form";
 import { Member } from "@/entities/member";
 import { Project, ProjectReference } from "@/entities/project";
 import { ProjectDTO } from "@/entities/project/types/types";
@@ -28,7 +27,6 @@ export interface UserProjectStatusData {
 }
 
 export interface UserProfileData {
-  forms: FormResultClient[];
   survey: {
     id: number;
     submittedAt: string;

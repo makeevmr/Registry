@@ -106,10 +106,6 @@ userRouter.get(
  *                   type: array
  *                   items:
  *                     $ref: '#/definitions/User'
- *                 forms:
- *                   type: array
- *                   items:
- *                     $ref: '#/definitions/FormResult'
  */
 userRouter.get(
   "/profile",
@@ -142,7 +138,5 @@ userRouter.get(
   passport.authenticate("jwt-authenticate"),
   userController.getUser
 );
-
-userRouter.post("/form", userController.submitForm);
 
 export default userRouter;

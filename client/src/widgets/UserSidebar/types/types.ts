@@ -1,7 +1,6 @@
 export type UserSidebarItemSlug =
   | "hero"
   | "survey"
-  | "forms"
   | "teams"
   | "projects"
   | "requests"

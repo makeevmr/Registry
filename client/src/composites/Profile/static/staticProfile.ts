@@ -1,20 +1,6 @@
 import { Profile, ProfileDTO } from "../types/types";
 
 export const staticProfileTeamAssigned: ProfileDTO = {
-  forms: [
-    {
-      id: 1,
-      name: "Анкета для студентов ПМ-ПУ",
-      link: "https://docs.google.com/forms/d/e/1FAIpQLSeucShuu9WjbZVa0gD1-MjQgySPoO9sh6L8kbQGl04BvF55fg/viewform?usp=sf_link",
-      completed: "2023-10-26T15:43:25.385Z",
-    },
-    {
-      id: 2,
-      name: "Новая анкета для студентов ПМ-ПУ",
-      link: "https://vk.com",
-      completed: null,
-    },
-  ],
   survey: null,
   requests: [],
   teams: [
@@ -132,20 +118,6 @@ export const staticProfileTeamAssigned: ProfileDTO = {
 };
 
 export const staticProfileTeamHiring: ProfileDTO = {
-  forms: [
-    {
-      id: 1,
-      name: "Анкета для студентов ПМ-ПУ",
-      link: "https://docs.google.com/forms/d/e/1FAIpQLSeucShuu9WjbZVa0gD1-MjQgySPoO9sh6L8kbQGl04BvF55fg/viewform?usp=sf_link",
-      completed: "2023-10-26T15:43:25.385Z",
-    },
-    {
-      id: 2,
-      name: "Новая анкета для студентов ПМ-ПУ",
-      link: "https://vk.com",
-      completed: null,
-    },
-  ],
   survey: null,
   requests: [{ id: 29, team: 4, project: "1", files: [] }],
   teams: [
