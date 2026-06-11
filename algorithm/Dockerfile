@@ -1,6 +1,7 @@
 FROM python:3.12-slim
 WORKDIR /server/app
 ENV PYTHONPATH="/server:${PYTHONPATH}"
+ENV PYTHONDONTWRITEBYTECODE=1
 COPY ./server/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY ./server /server
