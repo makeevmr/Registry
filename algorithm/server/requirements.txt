@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+numpy
+pandas
+scikit-learn
+langchain==0.3.6
+langchain-community==0.3.5
+gigachat
+pulp
+scipy

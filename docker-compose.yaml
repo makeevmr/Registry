@@ -99,9 +99,9 @@ services:
       # - ./postgres/init:/docker-entrypoint-initdb.d
   algorithm:
     build:
-      context: /home/art-makeev/Dev/Python/Projects/automatic_team_distribution
+      context: ./algorithm
       dockerfile: Dockerfile
     ports:
       - "8005:8005"
     volumes:
-      - /home/art-makeev/Dev/Python/Projects/automatic_team_distribution/app:/app
+      - ./algorithm/server:/server
